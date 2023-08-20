@@ -1,0 +1,22 @@
+#로그인
+POST http://127.0.0.1:8000/api-auth/login
+Content-Type: application/json
+
+{"username": "num2", "password": "test1234"}
+
+###
+
+# 회원가입
+POST http://127.0.0.1:8000/signup
+Content-Type: application/json
+
+{"username": "num2", "password": "test1234"}
+
+###
+
+# 토큰 확인인
+GET http://127.0.0.1:8000/test_token
+Content-Type: application/json
+Authorization: Token d1d2a98557695d31b43c88481d1cc226bf116a76
+
+{}
