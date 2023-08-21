@@ -1,4 +1,4 @@
-from MiniThread_backend import serializers
+from rest_framework import serializers
 from django.contrib.auth.models import User
 
 
