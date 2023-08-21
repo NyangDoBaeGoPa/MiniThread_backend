@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.hashers import make_password
 
 
 class UserManager(BaseUserManager):
@@ -10,15 +11,22 @@ class UserManager(BaseUserManager):
     def create_user(self, account_id, user_name, password=None, **extra_fields):
         user = self.model(account_id=account_id,
                           user_name=user_name, **extra_fields)
-        user.set_password(password)
+        hashed_password = make_password(password)
+        user.set_password(hashed_password)
+        user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, account_id, user_name, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+    def create_superuser(self, account_id, user_name, password):
+        user = self.model(account_id=account_id,
+                          user_name=user_name)
+        user.set_password(password)
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
 
-        return self.create_user(account_id, user_name, password, **extra_fields)
+        return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
