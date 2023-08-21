@@ -22,7 +22,7 @@ def signup(request):
         return Response(serializer.data, status=201)
 
 
-# 로그인
+# 로그인"
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
