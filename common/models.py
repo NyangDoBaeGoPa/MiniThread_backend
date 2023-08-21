@@ -36,6 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     username = models.CharField(
         max_length=30,
+        unique=True
     )
     is_staff = models.BooleanField(
         _('staff status'),
@@ -54,6 +55,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = UserManager()
+
+    USERNAME_FIELD = 'username'
 
     class Meta:
         verbose_name = _('user')
