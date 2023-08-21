@@ -3,5 +3,9 @@
     "editor.defaultFormatter": "ms-python.autopep8"
   },
   "python.formatting.provider": "none",
-  "cSpell.words": ["authtoken", "Browsable"]
+  "cSpell.words": [
+    "authtoken",
+    "Browsable",
+    "simplejwt"
+  ]
 }
