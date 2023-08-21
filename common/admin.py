@@ -4,7 +4,7 @@ from common.models import User
 
 
 class UserAdmin(UserAdmin):
-    list_display = ('user_name', 'account_id',)
+    list_display = ('account_id', 'user_name', 'date_joined')
     ordering = ()
     list_filter = ()
 
