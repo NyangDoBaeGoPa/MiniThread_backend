@@ -1,8 +1,5 @@
 asgiref==3.7.2
-brotlipy==0.7.0
-conda==23.1.0
 Django==4.2.4
-django-rest-authtoken==2.1.4
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 PyJWT==1.7.1
