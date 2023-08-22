@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-5_e*eqw9$m0rptk79)x6qd*%2=2d!hccx64*!e4e9f#-sfoemw
 DEBUG = False
 
 ALLOWED_HOSTS = ['localhost',
-                 'port-0-minithread-backend-eu1k2lllm16299.sel3.cloudtype.app']
+                 'port-0-minithread-backend-eu1k2lllm16299.sel3.cloudtype.app', '*']
 
 
 # Application definition
@@ -143,12 +143,12 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
 
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.BasicAuthentication',
     ),
 }
 
