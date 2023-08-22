@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from common.models import User
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UserCreateSerializer(serializers.Serializer):
@@ -16,3 +18,32 @@ class UserCreateSerializer(serializers.Serializer):
 
         user.save()
         return user
+
+
+class UserLoginSerializer(serializers.Serializer):
+    account_id = serializers.CharField(required=True)
+    password = serializers.CharField(required=True)
+    token = serializers.CharField(max_length=255, read_only=True)
+
+    def validate(self, data):
+        account_id = data.get("account_id", None)
+        password = data.get("password", None)
+        user = authenticate(account_id=account_id, password=password)
+
+        if user is None:
+            return {
+                'account_id': 'None'
+            }
+        try:
+            token = TokenObtainPairSerializer.get_token(user)
+            access_token = str(token.access_token)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(
+                'User with given account id and password does not exists'
+            )
+        return {
+            'account_id': user.account_id,
+            'token': {
+                "accessToken": access_token
+            }
+        }
