@@ -17,8 +17,10 @@ from django.shortcuts import get_object_or_404
 @permission_classes([AllowAny])  # 인증 필요없다
 def signup(request):
     print('request', request)
-    print('request.data', request.data['_content'])
-    serializer = UserCreateSerializer(data=request.data['_content'])
+    print('request.data', request.data)
+    print('request.parsers', request.parsers)
+    print('request.content_type', request.content_type)
+    serializer = UserCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save()  # DB 저장
         return Response(serializer.data, status=201)
