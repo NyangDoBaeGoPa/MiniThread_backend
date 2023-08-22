@@ -22,10 +22,11 @@ class UserCreateSerializer(serializers.Serializer):
 
 class UserLoginSerializer(serializers.Serializer):
     account_id = serializers.CharField(required=True)
-    password = serializers.CharField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
 
     def validate(self, data):
+        print(data)
         account_id = data.get("account_id", None)
         password = data.get("password", None)
         user = authenticate(account_id=account_id, password=password)
