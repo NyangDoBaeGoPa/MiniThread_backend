@@ -28,3 +28,12 @@ class ArticleList(APIView):
             serializer.save() # 저장
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+# article의 detail을 보여주는 역할
+class ArticleDetail(APIView):
+    # 객체 가져오기
+    def get_object(self, pk):
+        try:
+            return MiniThread.objects.get(pk=pk)
+        except MiniThread.DoesNotExist:
+            raise Http404
