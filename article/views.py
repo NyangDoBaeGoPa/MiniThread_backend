@@ -37,3 +37,9 @@ class ArticleDetail(APIView):
             return MiniThread.objects.get(pk=pk)
         except MiniThread.DoesNotExist:
             raise Http404
+
+    # detail 보기
+    def get(self, request, pk, format=None):
+        article = self.get_object(pk)
+        serializer = MiniThreadSerializer(article)
+        return Response(serializer.data)
