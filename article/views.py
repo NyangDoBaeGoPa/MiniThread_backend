@@ -43,3 +43,13 @@ class ArticleDetail(APIView):
         article = self.get_object(pk)
         serializer = MiniThreadSerializer(article)
         return Response(serializer.data)
+    
+    # article 수정하기
+    def put(self, request, pk, format=None):
+        article = self.get_object(pk)
+        serializer = MiniThreadSerializer(article, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
