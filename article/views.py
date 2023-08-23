@@ -19,3 +19,12 @@ class ArticleList(APIView):
         # 여러 개의 객체를 serialization하기 위해 many = True로 설정
         serializer = MiniThreadSerializer(articles, many=True)
         return Response(serializer.data)
+    
+    # 새로운 게시글을 작성할 때
+    def post(self, request):
+        # request.data는 사용자의 입력 데이터
+        serializer = MiniThreadSerializer(data=request.data)
+        if serializer.is_valid(): # 유효성 검사
+            serializer.save() # 저장
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
