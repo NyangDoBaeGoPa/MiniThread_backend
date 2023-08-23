@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 # 데이터 처리
 from .models import MiniThread
 from .serializer import MiniThreadSerializer
@@ -10,8 +8,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
 
+# 인증관련
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
+
 # Create your views here.
 # article 목록을 보여주는 역할
+@permission_classes([AllowAny])
 class ArticleList(APIView):
     # Article list를 보여줄 때
     def get(self, request):
@@ -30,6 +33,7 @@ class ArticleList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # article의 detail을 보여주는 역할
+@permission_classes([AllowAny])
 class ArticleDetail(APIView):
     # 객체 가져오기
     def get_object(self, pk):
