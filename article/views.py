@@ -32,6 +32,10 @@ class ArticleList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    # MiniThreadSerializer의 user field에 현재 user값 전달
+    def perform_create(self, serializer):
+        serializer.save(user = self.request.user)
+    
 # article의 detail을 보여주는 역할
 @permission_classes([AllowAny])
 class ArticleDetail(APIView):
