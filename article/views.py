@@ -11,11 +11,13 @@ from django.http import Http404
 # 인증관련
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 # Create your views here.
 # article 목록을 보여주는 역할
-# @permission_classes([AllowAny])
 class ArticleList(APIView):
+    # authentication 추가
+    authentication_classes = [BasicAuthentication, SessionAuthentication]
     # Article list를 보여줄 때
     def get(self, request):
         articles = MiniThread.objects.all()
