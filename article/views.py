@@ -10,7 +10,7 @@ from django.http import Http404
 
 # 인증관련
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 # Create your views here.
@@ -18,6 +18,8 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 class ArticleList(APIView):
     # authentication 추가
     authentication_classes = [BasicAuthentication, SessionAuthentication]
+    # permission 추가
+    permission_classes = [IsAuthenticatedOrReadOnly]
     # Article list를 보여줄 때
     def get(self, request):
         articles = MiniThread.objects.all()
@@ -38,9 +40,13 @@ class ArticleList(APIView):
     def perform_create(self, serializer):
         serializer.save(user = self.request.user)
     
+    
 # article의 detail을 보여주는 역할
-# @permission_classes([AllowAny])
 class ArticleDetail(APIView):
+    # authentication 추가
+    authentication_classes = [BasicAuthentication, SessionAuthentication]
+    # permission 추가
+    permission_classes = [IsAuthenticatedOrReadOnly]
     # 객체 가져오기
     def get_object(self, pk):
         try:
