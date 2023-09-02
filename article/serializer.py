@@ -1,8 +1,9 @@
 from .models import MiniThread
 from rest_framework import serializers
+from common.serializers import UserInfoSerializer
 
 class MiniThreadSerializer(serializers.ModelSerializer):
-    # 처음 가입할 때, 입력한 user name을 serializer에서 받아와야 함.
+    # 처음 가입할 때, 입력한 account id를 serializer에서 받아와야 함.
     user = serializers.ReadOnlyField(source = 'user.account_id')
     class Meta:
         model = MiniThread

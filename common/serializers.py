@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from common.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -49,3 +49,10 @@ class UserLoginSerializer(serializers.Serializer):
                 "accessToken": access_token
             }
         }
+
+# 패스워드가 필요없는 다른 테이블에서 사용할 용도
+class UserInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = ('account_id',)
