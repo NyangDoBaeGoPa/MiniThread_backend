@@ -49,25 +49,6 @@ class ArticleDetail(APIView):
     # authentication 추가
     authentication_classes = [BasicAuthentication, SessionAuthentication, JWTAuthentication]
     # permission 추가
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    # 객체 가져오기
-    def get_object(self, pk):
-        try:
-            return MiniThread.objects.get(pk=pk)
-        except MiniThread.DoesNotExist:
-            raise Http404
-
-    # detail 보기
-    def get(self, request, pk, format=None):
-        article = self.get_object(pk)
-        serializer = MiniThreadSerializer(article)
-        return Response(serializer.data)
-
-# article 수정하기
-class ArticleUpdate(APIView):
-    # authentication 추가
-    authentication_classes = [BasicAuthentication, SessionAuthentication, JWTAuthentication]
-    # permission 추가
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     # 객체 가져오기
     def get_object(self, pk):
@@ -75,7 +56,7 @@ class ArticleUpdate(APIView):
             return MiniThread.objects.get(pk=pk)
         except MiniThread.DoesNotExist:
             raise Http404
-        
+
     # detail 보기
     def get(self, request, pk, format=None):
         article = self.get_object(pk)
@@ -91,25 +72,6 @@ class ArticleUpdate(APIView):
             return Response(serializer.data)
             # return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-# article 삭제하기
-class ArticleDelete(APIView):
-    # authentication 추가
-    authentication_classes = [BasicAuthentication, SessionAuthentication]
-    # permission 추가
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    # 객체 가져오기
-    def get_object(self, pk):
-        try:
-            return MiniThread.objects.get(pk=pk)
-        except MiniThread.DoesNotExist:
-            raise Http404
-
-    # detail 보기
-    def get(self, request, pk, format=None):
-        article = self.get_object(pk)
-        serializer = MiniThreadSerializer(article)
-        return Response(serializer.data)
     
     # article 삭제하기
     def delete(self, request, pk, format=None):
